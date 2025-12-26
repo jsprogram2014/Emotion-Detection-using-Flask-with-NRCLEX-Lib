@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sentiment Console</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="./static/mywebscript.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6; /* Light grey base */
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111;
+        }
+
+        .console-container {
+            width: 90%;
+            max-width: 800px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Bar */
+        .console-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-badge {
+            background: #000;
+            color: #fff;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #10b981; /* Green "Online" dot */
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-text {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Main Content Split */
+        .console-body {
+            padding: 0;
+        }
+
+        /* The Input Area - Looks like a code editor */
+        .editor-area {
+            padding: 25px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Inter', sans-serif; /* Readable font for typing */
+            font-size: 1rem;
+            line-height: 1.5;
+            min-height: 150px;
+            resize: vertical;
+            outline: none;
+            transition: border 0.2s, background 0.2s;
+        }
+
+        textarea:focus {
+            border-color: #000;
+            background: #fff;
+        }
+
+        /* Button Area */
+        .action-bar {
+            padding: 0 25px 25px 25px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-run {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-run:hover {
+            opacity: 0.8;
+        }
+        
+        .btn-run::before {
+            content: "▶";
+            font-size: 0.7rem;
+            margin-right: 8px;
+        }
+
+        /* The Output Terminal */
+        .terminal-output {
+            background: #1e1e1e; /* Dark terminal background */
+            color: #d4d4d4;
+            padding: 25px;
+            border-top: 1px solid #e5e7eb;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+        }
+
+        .terminal-label {
+            color: #6b7280;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        #system_response {
+            line-height: 1.6;
+        }
+
+        /* Styling the bold text from your server response */
+        #system_response b {
+            color: #4ade80; /* Bright Green for the dominant emotion */
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="console-container">
+        <div class="console-header">
+            <div class="brand-badge">NLP-V1.0</div>
+            <div>
+                <span class="status-dot"></span>
+                <span class="status-text">System Ready</span>
+            </div>
+        </div>
+
+        <div class="console-body">
+            <div class="editor-area">
+                <label class="input-label" for="textToAnalyze">Input Data</label>
+                <textarea id="textToAnalyze" placeholder="// Type your text here for analysis..."></textarea>
+            </div>
+
+            <div class="action-bar">
+                <button onclick="RunSentimentAnalysis()" class="btn-run">EXECUTE ANALYSIS</button>
+            </div>
+        </div>
+
+        <div class="terminal-output">
+            <span class="terminal-label">Console Output >_</span>
+            <div id="system_response">
+                <span style="color: #555;">Waiting for input stream...</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
